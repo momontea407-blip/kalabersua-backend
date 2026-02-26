@@ -10,7 +10,9 @@ app.use(express.json());
 
 // Setup transporter
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false, // IMPORTANT → port 587 uses TLS STARTTLS
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -82,13 +84,14 @@ Terkirim otomatis dari sistem reservasi website Kala Bersua.
   }
 });
 
-/* -------------------------
-            SERVER
----------------------------*/
+// server
+
 app.get("/", (req, res) => {
   res.send("Backend aktif.");
 });
 
-app.listen(3000, () => {
-  console.log("Server berjalan di http://localhost:3000");
-});
+const PORT = proces.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log("Server jalan di port", PORT);
+}); ;
+
